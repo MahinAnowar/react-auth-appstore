@@ -3,6 +3,7 @@ import { HomeLayout } from "../Layouts/HomeLayout";
 import { Login } from "../Pages/login/Login";
 import { SignUp } from "../Pages/SignUp/SignUp";
 import { Faq } from "../Pages/FAQ/Faq";
+import { Apps } from "../Pages/Apps/Apps";
 
 const router = createBrowserRouter(
     [
@@ -21,6 +22,11 @@ const router = createBrowserRouter(
                 {
                     path:"/faq",
                     Component: Faq,
+                },
+                {
+                    path:"/apps",
+                    loader: () => fetch('apps.json'),
+                    Component: Apps,
                 },
                 {
                     path:"/*",

@@ -1,10 +1,11 @@
 import React from 'react'
+import { FcGoogle } from 'react-icons/fc';
 import { NavLink } from 'react-router-dom';
 
 export const Login = () => {
     return (
         <div>
-            <h1 className='text-3xl font-bold text-center mt-10'>Login</h1>
+            <h1 className='text-3xl font-bold text-center mt-10'>AppStore</h1>
             <div className="flex flex-col justify-center items-center py-10">
                 <div className="card w-96 bg-base-100 shadow-xl">
                     <div className="card-body">
@@ -15,6 +16,11 @@ export const Login = () => {
                            
                             <div className='text-center'>Forgotten password?</div>
                             <button className='btn btn-primary'>Login</button>
+                               <button className='btn btn-outline flex items-center justify-center gap-2'>
+                                                        <FcGoogle size={20} />
+                                                        Login With Google
+                                                    </button>
+                            
                         </form>
                     </div>
                 </div>

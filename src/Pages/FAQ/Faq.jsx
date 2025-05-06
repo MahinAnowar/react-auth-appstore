@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Faq = () => {
 return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-gray-100 py-[40px]">
         <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Frequently Asked Questions</h2>
             <div className="space-y-4">

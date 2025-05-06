@@ -1,0 +1,223 @@
+[
+    {
+      "id": 1,
+      "name": "Programming Hero",
+      "developer": "Programming Hero Ltd.",
+      "appLogo": "https://i.ibb.co.com/0yVXDNLn/53802153.jpg",
+      "banner": "https://i.ibb.co.com/chXRSzMp/banner.png",
+      "downloads": 3500000,
+      "category": "Education",
+      "rating": 4.8,
+      "description": "Programming Hero is a fun and interactive way to learn programming. Whether you're a beginner or looking to brush up your skills, this app makes learning to code exciting and practical.",
+      "features": [
+        "Interactive coding lessons",
+        "Real-world projects",
+        "Gamified learning experience"
+      ],
+      "reviews": [
+        {
+          "user": "coder_nadia",
+          "rating": 5,
+          "comment": "Best app for beginners! The lessons are super easy to follow and engaging."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "TaskMaster Pro",
+      "developer": "Innovatech Solutions Ltd.",
+      "appLogo": "https://i.ibb.co.com/RGtKmHTm/Generated-Image-May-07-2025-3-06-AM.jpg",
+      "banner": "https://i.ibb.co.com/N2pwpWz5/Generated-Image-May-07-2025-3-13-AM.jpg",
+      "downloads": 1200000,
+      "category": "Productivity",
+      "rating": 4.5,
+      "description": "Organize your life and boost your productivity with TaskMaster Pro. Manage tasks, set reminders, and collaborate seamlessly.",
+      "features": [
+        "Intuitive task management",
+        "Customizable reminders",
+        "Team collaboration tools",
+        "Progress tracking"
+      ],
+      "reviews": [
+        {
+          "user": "busy_bee_01",
+          "rating": 5,
+          "comment": "Helps me stay on top of everything! Life saver."
+        },
+        {
+          "user": "project_guru",
+          "rating": 4,
+          "comment": "Good for team projects, could use more integrations."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Galaxy Raiders",
+      "developer": "PixelStorm Games Inc.",
+      "appLogo": "https://i.ibb.co.com/dh6yjT1/Generated-Image-May-07-2025-3-14-AM.jpg",
+      "banner": "https://i.ibb.co.com/qYsxFwND/Generated-Image-May-07-2025-3-15-AM.jpg",
+      "downloads": 5000000,
+      "category": "Gaming",
+      "rating": 4.7,
+      "description": "Embark on an epic space adventure! Battle alien fleets, upgrade your ship, and conquer the galaxy in this thrilling shooter.",
+      "features": [
+        "Stunning 3D graphics",
+        "Intense space battles",
+        "Ship customization",
+        "Multiplayer PvP mode"
+      ],
+      "reviews": [
+        {
+          "user": "space_ace_pilot",
+          "rating": 5,
+          "comment": "Awesome graphics and addictive gameplay! Can't stop playing."
+        },
+        {
+          "user": "gamer_gal_92",
+          "rating": 4,
+          "comment": "Fun, but can be a bit grindy at times to get upgrades."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "LinguaLearn",
+      "developer": "Eduverse Inc.",
+      "appLogo": "https://i.ibb.co.com/nszc3YX6/Generated-Image-May-07-2025-3-16-AM.jpg",
+      "banner": "https://i.ibb.co.com/wZvPB6XK/Generated-Image-May-07-2025-3-16-AM-1.jpg",
+      "downloads": 2000000,
+      "category": "Education",
+      "rating": 4.6,
+      "description": "Master new languages with LinguaLearn. Interactive lessons, native speaker audio, and personalized learning paths make language acquisition easy and effective.",
+      "features": [
+        "Multiple languages available (Spanish, French, German, etc.)",
+        "Speech recognition practice",
+        "Offline mode for lessons",
+        "Personalized learning path"
+      ],
+      "reviews": [
+        {
+          "user": "polyglot_wannabe_007",
+          "rating": 5,
+          "comment": "I've learned so much Spanish with this app! The interactive exercises are great."
+        },
+        {
+          "user": "travel_bug_anna",
+          "rating": 4,
+          "comment": "Great for learning basic phrases before a trip. Very user-friendly."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "FocusFlow",
+      "developer": "Mindful Tech Co.",
+      "appLogo": "https://i.ibb.co.com/Pvtm9b8d/Generated-Image-May-07-2025-3-16-AM-2.jpg",
+      "banner": "https://i.ibb.co.com/5gPT9D81/Generated-Image-May-07-2025-3-18-AM.jpg",
+      "downloads": 800000,
+      "category": "Productivity",
+      "rating": 4.9,
+      "description": "Eliminate distractions and enhance your concentration with FocusFlow. Pomodoro timer, ambient sounds, and site blocker to keep you in the zone.",
+      "features": [
+        "Customizable Pomodoro timer",
+        "Library of ambient soundscapes",
+        "Website and app blocker",
+        "Session analytics and reports"
+      ],
+      "reviews": [
+        {
+          "user": "deep_worker_dave",
+          "rating": 5,
+          "comment": "Transformed my work habits. Incredibly effective for maintaining focus!"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Puzzle Quest: Elements",
+      "developer": "MindWarp Puzzles Studio",
+      "appLogo": "https://i.ibb.co.com/fGnKLzDd/Generated-Image-May-07-2025-3-18-AM-1.jpg",
+      "banner": "https://i.ibb.co.com/TM2v25X3/Generated-Image-May-07-2025-3-20-AM.jpg",
+      "downloads": 3000000,
+      "category": "Gaming",
+      "rating": 4.4,
+      "description": "A captivating blend of match-3 puzzle mechanics and RPG elements. Solve intricate puzzles to unleash powerful spells and defeat mythical creatures.",
+      "features": [
+        "Unique puzzle-RPG gameplay",
+        "Collectable heroes and spells",
+        "Engaging storyline and quests",
+        "Daily challenges and rewards"
+      ],
+      "reviews": [
+        {
+          "user": "puzzle_master_kim",
+          "rating": 5,
+          "comment": "Addictive and challenging. Love the RPG twist on match-3 games."
+        },
+        {
+          "user": "casual_gamer88",
+          "rating": 4,
+          "comment": "Fun game, good for passing time. Can be a bit repetitive after a while."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Math Whiz Kids",
+      "developer": "LearnSmart Labs LLC",
+      "appLogo": "https://i.ibb.co.com/5xRxmm0T/Generated-Image-May-07-2025-3-22-AM.jpg",
+      "banner": "https://i.ibb.co.com/yF2tHfLN/Generated-Image-May-07-2025-3-23-AM-1.jpg",
+      "downloads": 1500000,
+      "category": "Education",
+      "rating": 4.7,
+      "description": "Make math fun for kids! Interactive games, colorful animations, and step-by-step explanations for K-5 curriculum.",
+      "features": [
+        "Age-appropriate math games (K-5)",
+        "Parental controls and progress dashboard",
+        "Interactive tutorials",
+        "Curriculum-aligned content"
+      ],
+      "reviews": [
+        {
+          "user": "parent_of_2_kids",
+          "rating": 5,
+          "comment": "My kids actually enjoy learning math now! The games are very engaging."
+        },
+        {
+          "user": "teacher_mark",
+          "rating": 4,
+          "comment": "Good supplement to classroom learning. Covers core concepts well."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "NoteSphere",
+      "developer": "Synaptic Studios Ltd.",
+      "appLogo": "https://i.ibb.co.com/Cp3wbYjV/Generated-Image-May-07-2025-3-24-AM.jpg",
+      "banner": "https://i.ibb.co.com/CsKr16XG/Generated-Image-May-07-2025-3-24-AM-1.jpg",
+      "downloads": 2200000,
+      "category": "Productivity",
+      "rating": 4.6,
+      "description": "Capture your ideas effortlessly with NoteSphere. Rich text editing, cloud sync, and organization tools to keep your notes tidy and accessible everywhere.",
+      "features": [
+        "Rich text formatting options",
+        "Cross-device cloud sync",
+        "Tagging and folder system",
+        "Voice notes and attachments"
+      ],
+      "reviews": [
+        {
+          "user": "writer_dave_K",
+          "rating": 5,
+          "comment": "The best note-taking app I've used. Sync is flawless and interface is clean."
+        },
+        {
+          "user": "student_for_life",
+          "rating": 4,
+          "comment": "Great for lecture notes. Wish it had better PDF annotation features."
+        }
+      ]
+    }
+  ]
