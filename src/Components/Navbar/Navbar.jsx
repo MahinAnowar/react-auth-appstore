@@ -6,12 +6,14 @@ export const Navbar = () => {
     return (
         <div className="navbar bg-base-100 shadow-sm px-[20px]">
             <div className="flex-1">
-                <NavLink to='/'>
+                 
                     <div className='flex items-center gap-2'>
+                    <NavLink to='/' className={'btn bg-transparent border-none shadow-none flex items-center gap-2'}> 
                         <img src={logo} className='w-[40px]' alt="" />
                         <a className="text-xl">AppStore</a>
+                        </NavLink>
                     </div>
-                </NavLink>
+              
             </div>
             <div className="flex gap-2">
                 <NavLink to='/apps'><button className='btn p-3 px-[15px] border-black rounded-2xl'>Apps</button></NavLink>
