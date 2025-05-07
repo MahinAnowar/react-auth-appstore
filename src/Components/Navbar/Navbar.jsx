@@ -10,7 +10,7 @@ export const Navbar = () => {
                     <div className='flex items-center gap-2'>
                     <NavLink to='/' className={'btn bg-transparent border-none shadow-none flex items-center gap-2'}> 
                         <img src={logo} className='w-[40px]' alt="" />
-                        <a className="text-xl">AppStore</a>
+                        <p className="text-xl">AppStore</p>
                         </NavLink>
                     </div>
               

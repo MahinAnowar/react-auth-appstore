@@ -29,9 +29,9 @@ export const SignUp = () => {
                 </div>
             </div>
             <div className="flex justify-center items-center mt-[33px]">
-                <p className='text-center'>Already have an account? 
-                    <NavLink to='/login'> <a href="" className='text-blue-500'>Login</a></NavLink>
-                </p>
+                <div className='text-center'>Already have an account? 
+                    <NavLink to='/login'> <p className='text-blue-500'>Login</p></NavLink>
+                </div>
             </div>
         </div>
     </div>

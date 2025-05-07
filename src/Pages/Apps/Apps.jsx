@@ -141,7 +141,7 @@ export const Apps = () => {
             {/* --- Trending Apps Section (Overall) --- */}
             {/* REMOVE THE <Link> WRAPPER FROM HERE */}
             <div className="container mx-auto px-4 py-8">
-                <h1 className="text-3xl font-bold text-center mb-10 text-gray-800">Trending apps</h1>
+                <h1 className="text-3xl font-bold text-center mb-10 text-gray-800">Trending Apps</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {/* AppCard itself now handles the Link */}
                     {trendingAppsToDisplay.map(app => <AppCard key={`trending-${app.id}`} app={app} />)}
@@ -150,7 +150,7 @@ export const Apps = () => {
                     <div className="text-center mt-10">
                         <button
                             onClick={handleTrendingViewMore}
-                            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                            className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                             aria-label="View more trending apps"
                         >
                             View More
