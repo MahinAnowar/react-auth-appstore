@@ -6,6 +6,9 @@ import { SignUp } from "../Pages/SignUp/SignUp";
 import { Faq } from "../Pages/FAQ/Faq";
 import { Apps } from "../Pages/Apps/Apps";
 import AppDetails from "../Pages/AppDetails/AppDetails";
+import { PrivateRoute } from "../Provider/PrivateRoute";
+import Loading from "../Pages/Loading/Loading";
+import { Profile } from "../Pages/Profile/Profile";
 // import { AppDetails } from "../Pages/AppDetails/AppDetails";
 
 // Define a common loader function for fetching and parsing apps.json
@@ -46,6 +49,7 @@ const router = createBrowserRouter([
                 path: "",
                 loader: loadAppsData, // Relative path, good
                 Component: Apps,
+                hydrateFallbackElement: <Loading></Loading>,
             },
             {
                 path: "login", // Relative path, good
@@ -63,15 +67,25 @@ const router = createBrowserRouter([
                 path: "apps", // Relative path
                 loader: loadAppsData, // Use the common loader
                 Component: Apps,
+                hydrateFallbackElement: <Loading></Loading>,
                 // Optional: Add an errorElement specific to this route
                 // errorElement: <AppsErrorPage />,
             },
             {
                 path: "appDetails/:id", // Relative path
-                loader: loadAppsData, // Use the common loader
-                Component: AppDetails,
+                loader: loadAppsData,
+                hydrateFallbackElement: <Loading></Loading>, // Use the common loader
+                element:(
+                    <PrivateRoute>
+                        <AppDetails></AppDetails>
+                    </PrivateRoute>
+                ) ,
                 // Optional: Add an errorElement specific to this route
                 // errorElement: <AppDetailsErrorPage />, 
+            },
+            {
+                path:"/profile",
+                element:<Profile></Profile>,
             },
             {
                 path: "*", // Catch-all should usually be at the end of its level or the root level
