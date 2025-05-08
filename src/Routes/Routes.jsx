@@ -9,6 +9,7 @@ import AppDetails from "../Pages/AppDetails/AppDetails";
 import { PrivateRoute } from "../Provider/PrivateRoute";
 import Loading from "../Pages/Loading/Loading";
 import { Profile } from "../Pages/Profile/Profile";
+import { PublicRoute } from "../Provider/PublicRoute";
 // import { AppDetails } from "../Pages/AppDetails/AppDetails";
 
 // Define a common loader function for fetching and parsing apps.json
@@ -53,11 +54,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "login", // Relative path, good
-                Component: Login,
+                element:(<PublicRoute><Login></Login></PublicRoute>),
             },
             {
                 path: "signup", // Relative path
-                Component: SignUp,
+                element:(<PublicRoute><SignUp></SignUp></PublicRoute>),
             },
             {
                 path: "faq", // Relative path
@@ -85,7 +86,7 @@ const router = createBrowserRouter([
             },
             {
                 path:"/profile",
-                element:<Profile></Profile>,
+                element:(<PrivateRoute><Profile></Profile></PrivateRoute>),
             },
             {
                 path: "*", // Catch-all should usually be at the end of its level or the root level

@@ -1,17 +1,34 @@
-import React, { useContext, useState, useEffect } from 'react'; // Changed 'use' to 'useContext'
+import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../Provider/AuthProvider'; // Assuming this path is correct
-import Loading from '../Loading/Loading';
+import Loading from '../Loading/Loading'; // Your loading component
 import { useNavigate } from 'react-router-dom';
-// import toast from 'react-hot-toast'; // Optional: for user feedback as per original assignment guidelines
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 export const Profile = () => {
-    const { user, updateUser, loading: authLoading } = useContext(AuthContext); // Destructure updateUser
+    // Ensure you destructure the correct function name for updating profile from AuthContext
+    const { user, updateUserProfile, loading: authLoading, setLoading } = useContext(AuthContext); 
 
     const [name, setName] = useState('');
     const [photoURL, setPhotoURL] = useState('');
-    const [isEditing, setIsEditing] = useState(false); // To toggle between view and edit mode
-    const [isUpdating, setIsUpdating] = useState(false); // Loading state for the update process
-    const navigate = useNavigate(); // For navigation if needed
+    const [isEditing, setIsEditing] = useState(false);
+    const [isUpdating, setIsUpdating] = useState(false);
+    const navigate = useNavigate();
+
+    // Effect for redirecting if user is not authenticated AFTER auth check
+    // useEffect(() => {
+    //     if (!authLoading && !user) {
+    //         // Show a message before redirecting
+    //         Swal.fire({
+    //             icon: 'info',
+    //             title: 'Not Logged In',
+    //             text: 'Please log in to view your profile.',
+    //             timer: 2000,
+    //             showConfirmButton: false
+    //         }).then(() => {
+    //             navigate('/login');
+    //         });
+    //     }
+    // }, [authLoading, user, navigate]);
 
     // Effect to initialize form fields when user data is available or changes
     useEffect(() => {
@@ -23,8 +40,7 @@ export const Profile = () => {
 
     const handleEditToggle = () => {
         setIsEditing(!isEditing);
-        // Reset fields to current user data if canceling edit mode
-        if (isEditing && user) { // if was editing and now toggling off
+        if (isEditing && user) {
             setName(user.displayName || '');
             setPhotoURL(user.photoURL || '');
         }
@@ -33,61 +49,76 @@ export const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!user) {
-            // toast.error("You must be logged in to update your profile.");
-            console.error("User not logged in. This shouldn't happen if page is protected.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'You must be logged in to update your profile.',
+            });
             return;
         }
 
+        // Start visual update process
         setIsUpdating(true);
-        const profileDataToUpdate = {};
+        if (setLoading) setLoading(true); // Global loading state if available
 
-        // Only include fields in the update if they've actually changed
-        if (name !== (user.displayName || '')) { // Handle case where initial displayName is null
+        const profileDataToUpdate = {};
+        if (name !== (user.displayName || '')) {
             profileDataToUpdate.displayName = name;
         }
-        if (photoURL !== (user.photoURL || '')) { // Handle case where initial photoURL is null
-            profileDataToUpdate.photoURL = photoURL;
+        // Make photoURL truly optional: allow setting it to an empty string to remove it
+        if (photoURL !== (user.photoURL || '')) { 
+            profileDataToUpdate.photoURL = photoURL; // This can be an empty string
         }
         
-
         if (Object.keys(profileDataToUpdate).length === 0) {
-            // toast.info("No changes to save.");
-            console.log("No changes to save");
-            setIsEditing(false); // Still exit edit mode
+            Swal.fire({
+                icon: 'info',
+                title: 'No Changes',
+                text: 'There are no changes to save.',
+                timer: 1500,
+                showConfirmButton: false
+            });
+            setIsEditing(false);
             setIsUpdating(false);
+            if (setLoading) setLoading(false);
             return;
         }
 
         try {
-            await updateUser(profileDataToUpdate); // Call the updateUser function from AuthContext
-            // toast.success("Profile updated successfully!");
-            console.log("Profile updated successfully!");
+            // Use the correct function name from your AuthProvider (likely updateUserProfile)
+            await updateUserProfile(profileDataToUpdate); 
+            Swal.fire({
+                icon: 'success',
+                title: 'Profile Updated!',
+                text: 'Your profile has been updated successfully.',
+                showConfirmButton: false,
+                timer: 1500
+            });
             setIsEditing(false); // Exit edit mode on success
         } catch (error) {
-            // toast.error(`Failed to update profile: ${error.message}`);
             console.error("Failed to update profile:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Update Failed',
+                text: error.message || 'Could not update your profile. Please try again.',
+            });
         } finally {
             setIsUpdating(false);
+            if (setLoading) setLoading(false); // Stop global loading state
         }
     };
 
+    // Show loading spinner while auth state is being determined
     if (authLoading) {
-        return (
-           <Loading></Loading> // Show loading spinner while auth state is being determined
-        );
+        return <Loading />; 
     }
 
-    // If auth check is done and still no user, (though this page should be protected by a PrivateRoute)
+    // If, after loading, user is still null, the useEffect above will handle the redirect.
+    // This prevents rendering the rest of the component if user is null post-auth check.
     if (!user) {
-        return (
-            // <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-            //     <div className="text-xl font-semibold text-center">
-            //         Please log in to view or edit your profile.
-            //     </div>
-            // </div>
-            navigate('/login') // Redirect to login page if not authenticated
-        );
+        return <Loading />; // Or null, or some minimal placeholder while redirect effect runs
     }
+
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 py-10 md:py-20">
@@ -97,10 +128,9 @@ export const Profile = () => {
                 <div className="text-center mb-6">
                     <img
                         className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-blue-500 object-cover"
-                        // Show live preview of photoURL if editing, otherwise user's current photo
-                        src={isEditing ? (photoURL || "https://img.icons8.com/?size=96&id=z-JBA_KtSkxG&format=png") : (user.photoURL || "https://img.icons8.com/?size=96&id=z-JBA_KtSkxG&format=png")}
+                        src={isEditing && photoURL ? photoURL : (user.photoURL || "https://img.icons8.com/?size=96&id=z-JBA_KtSkxG&format=png")}
                         alt="Profile"
-                        onError={(e) => { // Basic fallback for broken image links
+                        onError={(e) => {
                             e.target.onerror = null; 
                             e.target.src="https://img.icons8.com/?size=96&id=z-JBA_KtSkxG&format=png"; 
                         }}
@@ -118,9 +148,9 @@ export const Profile = () => {
                             <span className="ml-2 text-gray-800">{user.email}</span>
                         </div>
                          {user.photoURL && (
-                            <div className="text-sm break-all mt-2"> {/* break-all for long URLs */}
+                            <div className="text-sm break-all mt-2">
                                 <span className="font-semibold text-gray-600">Current Photo URL:</span>
-                                <span className="ml-2 text-gray-500 ">{user.photoURL}</span>
+                                <a href={user.photoURL} target="_blank" rel="noopener noreferrer" className="ml-2 text-blue-500 hover:underline">{user.photoURL}</a>
                             </div>
                         )}
                         <button
@@ -144,20 +174,20 @@ export const Profile = () => {
                             />
                         </div>
                         <div>
-                            <label htmlFor="photoURL" className="block text-sm font-medium text-gray-700 mb-1">Photo URL</label>
+                            <label htmlFor="photoURL" className="block text-sm font-medium text-gray-700 mb-1">Photo URL (leave blank to remove)</label>
                             <input
                                 type="url"
                                 id="photoURL"
                                 value={photoURL}
                                 onChange={(e) => setPhotoURL(e.target.value)}
                                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                placeholder="https://example.com/image.jpg"
+                                placeholder="https://example.com/image.jpg or blank"
                             />
                         </div>
                         <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 mt-6">
                             <button
                                 type="submit"
-                                disabled={isUpdating}
+                                disabled={isUpdating || authLoading} // Disable if updating or auth is loading
                                 className="w-full cursor-pointer sm:w-auto flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-2.5 px-4 rounded-md transition duration-150 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-green-400"
                             >
                                 {isUpdating ? 'Saving...' : 'Save Changes'}
@@ -165,7 +195,7 @@ export const Profile = () => {
                             <button
                                 type="button"
                                 onClick={handleEditToggle}
-                                disabled={isUpdating}
+                                disabled={isUpdating || authLoading} // Disable if updating or auth is loading
                                 className="w-full cursor-pointer sm:w-auto flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2.5 px-4 rounded-md transition duration-150 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-gray-400"
                             >
                                 Cancel

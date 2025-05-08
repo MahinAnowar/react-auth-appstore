@@ -2,8 +2,7 @@
 import React, { useState, useMemo, useEffect, useContext } from 'react';
 import { useLoaderData, useParams, useNavigate, useLocation } from 'react-router-dom'; // Added useLocation
 import { AuthContext } from './../../Provider/AuthProvider';
-
-// import toast from 'react-hot-toast';
+import Swal from 'sweetalert2'; // Swal is already imported from your provided code
 
 const AppDetails = () => {
     const allApps = useLoaderData();
@@ -13,7 +12,6 @@ const AppDetails = () => {
     const { user } = useContext(AuthContext);
 
     const [isInstalled, setIsInstalled] = useState(false);
-    // 'hasInstalledOnce' still tracks if they have "experienced" the app
     const [hasInstalledOnce, setHasInstalledOnce] = useState(false); 
     const [userReviewText, setUserReviewText] = useState('');
     const [userRating, setUserRating] = useState(0);
@@ -26,22 +24,46 @@ const AppDetails = () => {
     
     useEffect(() => {
         setIsInstalled(false);
-        setHasInstalledOnce(false); // Reset for each app
+        setHasInstalledOnce(false); 
         setUserReviewText('');
         setUserRating(0);
         setSessionReviews([]);
         window.scrollTo(0, 0);
     }, [paramId]);
 
+    // --- MODIFIED FUNCTION ---
     const handleInstallToggle = () => {
+        const appToNotify = currentApp ? currentApp.name : "The app"; // Get app name for message
+        const nextIsInstalledState = !isInstalled; // Determine what the next state will be
+
         setIsInstalled(prevState => {
-            const newState = !prevState; // This is the new value of isInstalled
-            if (newState && !hasInstalledOnce) { // If we are setting isInstalled to true for the first time
+            const newState = !prevState; 
+            if (newState && !hasInstalledOnce) { 
                 setHasInstalledOnce(true);
             }
             return newState;
         });
+
+        // Show SweetAlert based on the action (installing or uninstalling)
+        if (nextIsInstalledState) { // If the action was to install
+            Swal.fire({
+                icon: 'success',
+                title: 'Installed!',
+                text: `${appToNotify} has been successfully installed.`,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        } else { // If the action was to uninstall
+            Swal.fire({
+                icon: 'info',
+                title: 'Uninstalled',
+                text: `${appToNotify} has been uninstalled.`,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
     };
+    // --- END OF MODIFIED FUNCTION ---
 
     const handleRatingChange = (e) => {
         setUserRating(parseInt(e.target.value));
@@ -50,22 +72,34 @@ const AppDetails = () => {
     const handleReviewSubmit = (e) => {
         e.preventDefault();
         if (!user) {
-            // toast.error("Please log in to submit a review.");
-            alert("Please log in to submit a review.");
-            navigate('/login', { state: { from: location } });
+            Swal.fire({
+                icon: 'warning',
+                title: 'Login Required',
+                text: 'Please log in to submit a review.',
+                confirmButtonText: 'Go to Login'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login', { state: { from: location } });
+                }
+            });
             return;
         }
 
-        // CRITICAL: Check if user has "experienced" the app
         if (!hasInstalledOnce) {
-            // toast.error("You must install the app before submitting a review.");
-            alert("You must install the app (or have installed it previously this session) before submitting a review.");
+            Swal.fire({
+                icon: 'info',
+                title: 'Installation Required',
+                text: 'You must install the app (or have installed it previously this session) before submitting a review.',
+            });
             return; 
         }
 
         if (userRating === 0 || !userReviewText.trim()) {
-            // toast.error("Please provide a rating and a review comment.");
-            alert("Please provide a rating and a review comment.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Missing Information',
+                text: 'Please provide both a star rating and a review comment.',
+            });
             return;
         }
 
@@ -77,13 +111,19 @@ const AppDetails = () => {
         };
 
         setSessionReviews(prevReviews => [...prevReviews, newReview]);
-        // toast.success("Review submitted successfully! (Visible this session)");
-        alert("Review submitted successfully! (Visible this session)");
+        
+        Swal.fire({
+            icon: 'success',
+            title: 'Review Submitted!',
+            text: 'Your review has been added for this session.',
+            showConfirmButton: false,
+            timer: 1500
+        });
+        
         setUserReviewText('');
         setUserRating(0);
     };
 
-    // ... (loading and app not found JSX remains the same) ...
     if (allApps === undefined || (Array.isArray(allApps) && allApps.length === 0 && !currentApp)) { 
         return (
             <div className="container mx-auto px-4 py-8 text-center min-h-screen flex flex-col justify-center items-center">
@@ -101,11 +141,10 @@ const AppDetails = () => {
         );
     }
 
-
     const {
         name = "Unnamed App",
         developer = "Unknown Developer",
-        appLogo,
+        appLogo, // Assuming your data uses appLogo for the thumbnail
         banner, downloads,
         category = "Uncategorized",
         rating,
@@ -120,8 +159,6 @@ const AppDetails = () => {
 
     return (
         <div className="container mx-auto px-4 py-8">
-            {/* ... (Banner, App Header, Description, Features JSX same as before) ... */}
-            
              {/* Banner Image */}
              <div className="mb-8 rounded-lg overflow-hidden shadow-lg h-64 md:h-80 bg-gray-200">
                 {banner ? (
@@ -156,7 +193,7 @@ const AppDetails = () => {
                         </span>
                     </div>
                     <button
-                        onClick={handleInstallToggle}
+                        onClick={handleInstallToggle} // This now calls the modified function
                         className={`w-full sm:w-auto px-8 py-3 rounded-lg font-semibold text-white transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-opacity-50 shadow-md
                             ${isInstalled 
                                 ? 'bg-red-500 hover:bg-red-600 focus:ring-red-400' 
@@ -185,11 +222,10 @@ const AppDetails = () => {
 
 
             {/* User Review Section - Form visibility tied to isInstalled */}
-            {isInstalled && user && ( // ****** CHANGED CONDITION HERE: Only show form IF CURRENTLY INSTALLED & user logged in ******
+            {isInstalled && user && (
                 <div className="mb-8 p-6 bg-white rounded-lg shadow">
                     <h2 className="text-2xl font-semibold text-gray-700 mb-4">Write Your Review</h2>
                     <form onSubmit={handleReviewSubmit}>
-                        {/* ... (rest of the form JSX is the same as before) ... */}
                         <div className="mb-4">
                             <label htmlFor="userRatingInputs" className="block text-sm font-medium text-gray-700 mb-1">Your Rating (1-5 stars):</label>
                             <div id="userRatingInputs" className="rating rating-md gap-1">
@@ -221,7 +257,7 @@ const AppDetails = () => {
                         </div>
                         <button 
                             type="submit" 
-                            disabled={!hasInstalledOnce || userRating === 0 || !userReviewText.trim()} // Still check hasInstalledOnce here
+                            disabled={!hasInstalledOnce || userRating === 0 || !userReviewText.trim()}
                             className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:bg-gray-400 disabled:cursor-not-allowed"
                         >
                             Submit Review
@@ -229,21 +265,17 @@ const AppDetails = () => {
                     </form>
                 </div>
             )}
-            {/* Message if user isn't logged in but could potentially review */}
             {isInstalled && !user && (
                 <div className="mb-8 p-6 bg-yellow-50 border border-yellow-200 rounded-lg shadow text-center">
                     <p className="text-yellow-700">You must be <button onClick={() => navigate('/login', { state: { from: location }})} className="font-semibold underline hover:text-yellow-800">logged in</button> to submit a review.</p>
                 </div>
             )}
-            {/* Message if form is hidden but they *could* review if they installed */}
              {!isInstalled && hasInstalledOnce && user && (
                  <div className="mb-8 p-6 bg-blue-50 border border-blue-200 rounded-lg shadow text-center">
                      <p className="text-blue-700">You can write a review for this app if you install it. <br/> (You've installed it previously this session, so reviews are enabled for you once installed).</p>
                  </div>
              )}
 
-
-            {/* ... (Display Combined Reviews JSX same as before) ... */}
              {(combinedReviews && combinedReviews.length > 0) ? (
                 <div className="p-6 bg-white rounded-lg shadow">
                     <h2 className="text-2xl font-semibold text-gray-700 mb-6">
@@ -283,8 +315,6 @@ const AppDetails = () => {
                     }
                 </div>
             )}
-
-
         </div>
     );
 };
