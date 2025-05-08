@@ -1,14 +1,14 @@
 // src/Pages/AppDetails/AppDetails.jsx
 import React, { useState, useMemo, useEffect, useContext } from 'react';
-import { useLoaderData, useParams, useNavigate, useLocation } from 'react-router-dom'; // Added useLocation
+import { useLoaderData, useParams, useNavigate, useLocation } from 'react-router-dom'; 
 import { AuthContext } from './../../Provider/AuthProvider';
-import Swal from 'sweetalert2'; // Swal is already imported from your provided code
+import Swal from 'sweetalert2';
 
 const AppDetails = () => {
     const allApps = useLoaderData();
     const { id: paramId } = useParams();
     const navigate = useNavigate();
-    const location = useLocation(); // For redirecting after login prompt
+    const location = useLocation(); 
     const { user } = useContext(AuthContext);
 
     const [isInstalled, setIsInstalled] = useState(false);
@@ -23,6 +23,7 @@ const AppDetails = () => {
     }, [allApps, paramId]);
     
     useEffect(() => {
+        // Reset states for the new app when paramId changes
         setIsInstalled(false);
         setHasInstalledOnce(false); 
         setUserReviewText('');
@@ -31,21 +32,19 @@ const AppDetails = () => {
         window.scrollTo(0, 0);
     }, [paramId]);
 
-    // --- MODIFIED FUNCTION ---
     const handleInstallToggle = () => {
-        const appToNotify = currentApp ? currentApp.name : "The app"; // Get app name for message
-        const nextIsInstalledState = !isInstalled; // Determine what the next state will be
+        const appToNotify = currentApp ? currentApp.name : "The app"; 
+        const nextIsInstalledState = !isInstalled; 
 
         setIsInstalled(prevState => {
             const newState = !prevState; 
-            if (newState && !hasInstalledOnce) { 
-                setHasInstalledOnce(true);
+            if (newState && !hasInstalledOnce) { // If installing and it's the first time this session
+                setHasInstalledOnce(true);      // Set hasInstalledOnce to true, and it STAYS true
             }
             return newState;
         });
 
-        // Show SweetAlert based on the action (installing or uninstalling)
-        if (nextIsInstalledState) { // If the action was to install
+        if (nextIsInstalledState) { 
             Swal.fire({
                 icon: 'success',
                 title: 'Installed!',
@@ -53,7 +52,7 @@ const AppDetails = () => {
                 showConfirmButton: false,
                 timer: 1500
             });
-        } else { // If the action was to uninstall
+        } else { 
             Swal.fire({
                 icon: 'info',
                 title: 'Uninstalled',
@@ -63,7 +62,6 @@ const AppDetails = () => {
             });
         }
     };
-    // --- END OF MODIFIED FUNCTION ---
 
     const handleRatingChange = (e) => {
         setUserRating(parseInt(e.target.value));
@@ -72,7 +70,7 @@ const AppDetails = () => {
     const handleReviewSubmit = (e) => {
         e.preventDefault();
         if (!user) {
-            Swal.fire({
+            Swal.fire({ 
                 icon: 'warning',
                 title: 'Login Required',
                 text: 'Please log in to submit a review.',
@@ -85,17 +83,17 @@ const AppDetails = () => {
             return;
         }
 
-        if (!hasInstalledOnce) {
-            Swal.fire({
+        if (!hasInstalledOnce) { 
+            Swal.fire({ 
                 icon: 'info',
                 title: 'Installation Required',
-                text: 'You must install the app (or have installed it previously this session) before submitting a review.',
+                text: 'You must install the app before submitting a review.',
             });
             return; 
         }
 
         if (userRating === 0 || !userReviewText.trim()) {
-            Swal.fire({
+            Swal.fire({ 
                 icon: 'error',
                 title: 'Missing Information',
                 text: 'Please provide both a star rating and a review comment.',
@@ -112,12 +110,12 @@ const AppDetails = () => {
 
         setSessionReviews(prevReviews => [...prevReviews, newReview]);
         
-        Swal.fire({
+        Swal.fire({ 
             icon: 'success',
             title: 'Review Submitted!',
             text: 'Your review has been added for this session.',
             showConfirmButton: false,
-            timer: 1500
+            timer: 1500 
         });
         
         setUserReviewText('');
@@ -144,7 +142,7 @@ const AppDetails = () => {
     const {
         name = "Unnamed App",
         developer = "Unknown Developer",
-        appLogo, // Assuming your data uses appLogo for the thumbnail
+        appLogo,
         banner, downloads,
         category = "Uncategorized",
         rating,
@@ -159,7 +157,6 @@ const AppDetails = () => {
 
     return (
         <div className="container mx-auto px-4 py-8">
-             {/* Banner Image */}
              <div className="mb-8 rounded-lg overflow-hidden shadow-lg h-64 md:h-80 bg-gray-200">
                 {banner ? (
                     <img src={banner} alt={`${name} banner`} className="w-full h-full object-cover"/>
@@ -167,8 +164,6 @@ const AppDetails = () => {
                     <div className="w-full h-full flex items-center justify-center text-gray-500">No Banner Available</div>
                 )}
             </div>
-
-            {/* App Header */}
             <div className="flex flex-col sm:flex-row items-center sm:items-start mb-8">
                 <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl border-4 border-gray-200 shadow-md mb-4 sm:mb-0 sm:mr-6 bg-gray-100 flex-shrink-0">
                      {appLogo ? (
@@ -193,8 +188,8 @@ const AppDetails = () => {
                         </span>
                     </div>
                     <button
-                        onClick={handleInstallToggle} // This now calls the modified function
-                        className={`w-full sm:w-auto px-8 py-3 rounded-lg font-semibold text-white transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-opacity-50 shadow-md
+                        onClick={handleInstallToggle} 
+                        className={`w-full cursor-pointer sm:w-auto px-8 py-3 rounded-lg font-semibold text-white transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-opacity-50 shadow-md
                             ${isInstalled 
                                 ? 'bg-red-500 hover:bg-red-600 focus:ring-red-400' 
                                 : 'bg-green-500 hover:bg-green-600 focus:ring-green-400'}`}
@@ -203,14 +198,10 @@ const AppDetails = () => {
                     </button>
                 </div>
             </div>
-
-            {/* Description */}
             <div className="mb-8 p-6 bg-white rounded-lg shadow">
                 <h2 className="text-2xl font-semibold text-gray-700 mb-3">Description</h2>
                 <p className="text-gray-600 leading-relaxed whitespace-pre-line">{description}</p>
             </div>
-
-            {/* Features */}
             {features && features.length > 0 && (
                 <div className="mb-8 p-6 bg-white rounded-lg shadow">
                     <h2 className="text-2xl font-semibold text-gray-700 mb-4">Features</h2>
@@ -220,9 +211,8 @@ const AppDetails = () => {
                 </div>
             )}
 
-
-            {/* User Review Section - Form visibility tied to isInstalled */}
-            {isInstalled && user && (
+            {/* User Review Section - Visibility is now tied to hasInstalledOnce */}
+            {hasInstalledOnce && user && ( 
                 <div className="mb-8 p-6 bg-white rounded-lg shadow">
                     <h2 className="text-2xl font-semibold text-gray-700 mb-4">Write Your Review</h2>
                     <form onSubmit={handleReviewSubmit}>
@@ -258,25 +248,24 @@ const AppDetails = () => {
                         <button 
                             type="submit" 
                             disabled={!hasInstalledOnce || userRating === 0 || !userReviewText.trim()}
-                            className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                            className="px-6 cursor-pointer py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:bg-gray-400 disabled:cursor-not-allowed"
                         >
                             Submit Review
                         </button>
                     </form>
                 </div>
             )}
-            {isInstalled && !user && (
+            
+            {/* Message if user needs to log in BUT has 'experienced' the app */}
+            {hasInstalledOnce && !user && ( 
                 <div className="mb-8 p-6 bg-yellow-50 border border-yellow-200 rounded-lg shadow text-center">
                     <p className="text-yellow-700">You must be <button onClick={() => navigate('/login', { state: { from: location }})} className="font-semibold underline hover:text-yellow-800">logged in</button> to submit a review.</p>
                 </div>
             )}
-             {!isInstalled && hasInstalledOnce && user && (
-                 <div className="mb-8 p-6 bg-blue-50 border border-blue-200 rounded-lg shadow text-center">
-                     <p className="text-blue-700">You can write a review for this app if you install it. <br/> (You've installed it previously this session, so reviews are enabled for you once installed).</p>
-                 </div>
-             )}
 
-             {(combinedReviews && combinedReviews.length > 0) ? (
+            {/* Removed the specific informational message you didn't want */}
+
+            {(combinedReviews && combinedReviews.length > 0) ? (
                 <div className="p-6 bg-white rounded-lg shadow">
                     <h2 className="text-2xl font-semibold text-gray-700 mb-6">
                         User Reviews ({combinedReviews.length})

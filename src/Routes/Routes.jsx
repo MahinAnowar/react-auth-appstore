@@ -10,6 +10,7 @@ import { PrivateRoute } from "../Provider/PrivateRoute";
 import Loading from "../Pages/Loading/Loading";
 import { Profile } from "../Pages/Profile/Profile";
 import { PublicRoute } from "../Provider/PublicRoute";
+import { ErrorPage } from "../Pages/ErrorPage/ErrorPage";
 // import { AppDetails } from "../Pages/AppDetails/AppDetails";
 
 // Define a common loader function for fetching and parsing apps.json
@@ -90,7 +91,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "*", // Catch-all should usually be at the end of its level or the root level
-                element: <h1>404 Page Not Found</h1>,
+                Component: ErrorPage,
             }
         ]
     },

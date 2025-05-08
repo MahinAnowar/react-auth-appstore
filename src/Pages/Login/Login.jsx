@@ -3,6 +3,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2'; // Import SweetAlert2
+import logo from '../../assets/logo.png'; // Import your logo here
 
 export const Login = () => {
 
@@ -33,7 +34,7 @@ export const Login = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        
+
         setLoading(true); // Optional: Indicate loading starts
         signIn(email, password)
             .then(result => {
@@ -136,7 +137,12 @@ export const Login = () => {
 
     return (
         <div>
-            <h1 className='text-3xl font-bold text-center mt-10 mb-8'>AppStore</h1>
+
+            <div className='justify-center pt-[25px] normal-case text-3xl flex items-center gap-2 p-0 hover:bg-transparent'>
+                <img src={logo} className='w-[40px] h-auto' alt="AppStore Logo" /> {/* Added h-auto for aspect ratio */}
+                <span>AppStore</span> {/* Use span for better semantics with text */}
+            </div>
+
             <div className="flex flex-col justify-center items-center py-10 px-4">
                 <div className="card w-full max-w-md bg-base-100 shadow-xl p-2 sm:p-0">
                     <div className="card-body">
