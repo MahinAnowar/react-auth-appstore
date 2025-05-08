@@ -1,10 +1,15 @@
-// src/Pages/AppDetails/AppDetails.jsx
 import React, { useState, useMemo, useEffect, useContext } from 'react';
 import { useLoaderData, useParams, useNavigate, useLocation } from 'react-router-dom'; 
 import { AuthContext } from './../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
+import Loading from '../Loading/Loading';
 
 const AppDetails = () => {
+
+    //  useEffect(() => {
+    //         document.title = "App Details - App Store";
+    //     }, []);
+
     const allApps = useLoaderData();
     const { id: paramId } = useParams();
     const navigate = useNavigate();
@@ -31,6 +36,16 @@ const AppDetails = () => {
         setSessionReviews([]);
         window.scrollTo(0, 0);
     }, [paramId]);
+
+    useEffect(() => {
+        if (currentApp) {
+            document.title = `${currentApp.name} - Details | AppStore`;
+        } else {
+           
+            document.title = "App Details | AppStore";
+        }
+
+    }, [currentApp, paramId]);
 
     const handleInstallToggle = () => {
         const appToNotify = currentApp ? currentApp.name : "The app"; 
@@ -125,7 +140,7 @@ const AppDetails = () => {
     if (allApps === undefined || (Array.isArray(allApps) && allApps.length === 0 && !currentApp)) { 
         return (
             <div className="container mx-auto px-4 py-8 text-center min-h-screen flex flex-col justify-center items-center">
-                <h1 className="text-2xl font-semibold text-gray-700">Loading App Details...</h1>
+                <Loading></Loading>
             </div>
         );
     }
@@ -263,7 +278,6 @@ const AppDetails = () => {
                 </div>
             )}
 
-            {/* Removed the specific informational message you didn't want */}
 
             {(combinedReviews && combinedReviews.length > 0) ? (
                 <div className="p-6 bg-white rounded-lg shadow">

@@ -119,9 +119,12 @@ export const Profile = () => {
         return <Loading />; // Or null, or some minimal placeholder while redirect effect runs
     }
 
+    useEffect(() => {
+        document.title = "My Profile - AppStore";
+    }, []);
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 py-10 md:py-20">
+        <div className="flex flex-col items-center justify-center bg-gray-100 py-[80px]">
             <div className="bg-white shadow-xl rounded-lg p-6 md:p-8 w-full max-w-md">
                 <h1 className="text-3xl font-bold text-center mb-6 text-gray-700">My Profile</h1>
 
@@ -197,7 +200,7 @@ export const Profile = () => {
                             <button
                                 type="submit"
                                 disabled={isUpdating || authLoading} // Disable if updating or auth is loading
-                                className="w-full cursor-pointer sm:w-auto flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-2.5 px-4 rounded-md transition duration-150 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-green-400"
+                                className="w-full cursor-pointer sm:w-auto flex-1 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2.5 px-4 rounded-md transition duration-150 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-400"
                             >
                                 {isUpdating ? 'Saving...' : 'Save Changes'}
                             </button>

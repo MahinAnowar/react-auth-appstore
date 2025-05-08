@@ -7,6 +7,10 @@ import logo from '../../assets/logo.png'; // Import your logo here
 
 export const Login = () => {
 
+     useEffect(() => {
+            document.title = "Login - AppStore";
+        }, []);
+
     // const {user, authLoading}=use(AuthContext);
 
     // useEffect(() => {
@@ -35,10 +39,10 @@ export const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
 
-        setLoading(true); // Optional: Indicate loading starts
+        setLoading(true); 
         signIn(email, password)
             .then(result => {
-                // const user = result.user; // No longer directly needed here if navigate occurs
+                
                 Swal.fire({
                     icon: 'success',
                     title: 'Login Successful!',
@@ -62,10 +66,10 @@ export const Login = () => {
     };
 
     const handleGoogleLogin = () => {
-        setLoading(true); // Optional
+        setLoading(true);
         googleSignIn()
             .then(result => {
-                // const user = result.user; // No longer directly needed
+                
                 Swal.fire({
                     icon: 'success',
                     title: 'Google Login Successful!',
@@ -77,6 +81,7 @@ export const Login = () => {
             })
             .catch(error => {
                 console.error('Google login error:', error);
+               
                 Swal.fire({
                     icon: 'error',
                     title: 'Google Login Failed',
@@ -84,12 +89,11 @@ export const Login = () => {
                 });
             })
             .finally(() => {
-                setLoading(false); // Optional
+                setLoading(false);
             });
     };
 
-    const handleForgotPassword = async () => { // Make it async to use await with Swal
-        // Use Swal to get the email input
+    const handleForgotPassword = async () => { 
         const { value: email } = await Swal.fire({
             title: 'Reset Password',
             input: 'email',
@@ -102,15 +106,14 @@ export const Login = () => {
                 if (!value) {
                     return 'You need to write something!'
                 }
-                // Basic email format check (optional, can be more robust)
                 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
                     return 'Please enter a valid email address.'
                 }
             }
         });
 
-        if (email) { // Proceed if the user entered an email and clicked "Send Reset Link"
-            setLoading(true); // Optional
+        if (email) { 
+            setLoading(true); 
             resetPassword(email)
                 .then(() => {
                     Swal.fire({
@@ -128,10 +131,10 @@ export const Login = () => {
                     });
                 })
                 .finally(() => {
-                    setLoading(false); // Optional
+                    setLoading(false); 
                 });
         }
-        // If the user cancels or closes the Swal input, `email` will be undefined, and nothing happens.
+       
     };
 
 
@@ -139,8 +142,8 @@ export const Login = () => {
         <div>
 
             <div className='justify-center pt-[25px] normal-case text-3xl flex items-center gap-2 p-0 hover:bg-transparent'>
-                <img src={logo} className='w-[40px] h-auto' alt="AppStore Logo" /> {/* Added h-auto for aspect ratio */}
-                <span>AppStore</span> {/* Use span for better semantics with text */}
+                <img src={logo} className='w-[40px] h-auto' alt="AppStore Logo" /> 
+                <span>AppStore</span> 
             </div>
 
             <div className="flex flex-col justify-center items-center py-10 px-4">

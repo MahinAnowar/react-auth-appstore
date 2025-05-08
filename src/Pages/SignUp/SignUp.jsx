@@ -1,10 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from '../../Provider/AuthProvider';
-import Swal from 'sweetalert2'; // Import SweetAlert2
+import Swal from 'sweetalert2'; 
+import logo from '../../assets/logo.png'; 
 
 export const SignUp = () => {
+
+    useEffect(() => {
+        document.title = "Sign Up - AppStore";
+    }, []);
+
     const { createUser, updateUserProfile, googleSignIn, setLoading } = useContext(AuthContext); // Added setLoading
     const navigate = useNavigate();
 
@@ -52,7 +58,7 @@ export const SignUp = () => {
                 if (photoUrl) {
                     profileData.photoURL = photoUrl;
                 }
-                
+
                 return updateUserProfile(profileData)
                     .then(() => {
                         console.log('User profile updated successfully for email/password signup');
@@ -110,44 +116,47 @@ export const SignUp = () => {
 
     return (
         <div>
-            <h1 className='text-3xl font-bold text-center mt-10 mb-8'>AppStore</h1> {/* Added margin-bottom */}
-            <div className="flex flex-col justify-center items-center py-10 px-4"> {/* Added horizontal padding */}
-                <div className="card w-full max-w-md bg-base-100 shadow-xl p-2 sm:p-0"> {/* Responsive */}
+            <div className='justify-center pt-[25px] normal-case text-3xl flex items-center gap-2 p-0 hover:bg-transparent'>
+                <img src={logo} className='w-[40px] h-auto' alt="AppStore Logo" />
+                <span>AppStore</span>
+            </div>
+            <div className="flex flex-col justify-center items-center py-10 px-4"> 
+                <div className="card w-full max-w-md bg-base-100 shadow-xl p-2 sm:p-0"> 
                     <div className="card-body">
-                        <h2 className="text-center text-2xl font-bold mb-6">Sign Up</h2> {/* Added margin-bottom */}
+                        <h2 className="text-center text-2xl font-bold mb-6">Sign Up</h2> 
                         <form onSubmit={handleRegister} className='flex flex-col gap-4'>
-                            <input 
-                                required 
-                                name="name" 
-                                type="text" 
-                                placeholder="Full Name" 
-                                className="input input-bordered w-full" 
+                            <input
+                                required
+                                name="name"
+                                type="text"
+                                placeholder="Full Name"
+                                className="input input-bordered w-full"
                             />
-                            {/* Photo URL is optional for signup */}
-                            <input 
-                                name="photoUrl" 
-                                type="url" 
-                                placeholder="Your Photo URL (Optional)" 
-                                className="input input-bordered w-full" 
+                         
+                            <input
+                                name="photoUrl"
+                                type="url"
+                                placeholder="Your Photo URL (Optional)"
+                                className="input input-bordered w-full"
                             />
-                            <input 
-                                required 
-                                name="email" 
-                                type="email" 
-                                placeholder="Email" 
-                                className="input input-bordered w-full" 
+                            <input
+                                required
+                                name="email"
+                                type="email"
+                                placeholder="Email"
+                                className="input input-bordered w-full"
                             />
-                            <input 
-                                required 
-                                name="password" 
-                                type="password" 
-                                placeholder="Password" 
-                                className="input input-bordered w-full" 
+                            <input
+                                required
+                                name="password"
+                                type="password"
+                                placeholder="Password"
+                                className="input input-bordered w-full"
                             />
 
                             <button type="submit" className='btn btn-primary w-full'>Sign Up</button>
 
-                            <div className="divider my-2">OR</div> {/* Adjusted divider margin */}
+                            <div className="divider my-2">OR</div> 
 
                             <button
                                 type="button"

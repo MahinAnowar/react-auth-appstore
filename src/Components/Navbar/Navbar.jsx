@@ -8,6 +8,17 @@ export const Navbar = () => {
     const { user, logOut, setLoading } = useContext(AuthContext); // Added setLoading (optional)
     const navigate = useNavigate(); // For redirecting after logout
 
+
+    const handlePfpSetting = () => {
+        Swal.fire({
+            icon: 'info',
+            title: 'Settings - Coming Soon!',
+            text: 'This feature is currently under development and has not been implemented yet. Please check back later!',
+            confirmButtonText: 'Got it!',
+            // You can add more Swal options here if needed, e.g., custom class, footer, etc.
+        });
+    };
+
     const handleLogOut = () => {
         if (setLoading) setLoading(true); // Optional: indicate loading starts
         logOut()
@@ -42,7 +53,7 @@ export const Navbar = () => {
     return (
         <div className="navbar bg-base-100 shadow-sm px-[20px] sticky top-0 z-50"> {/* Added sticky top & z-index */}
             <div className="navbar-start"> {/* Use navbar-start for left section */}
-                <NavLink to='/' className={'btn btn-ghost normal-case text-xl flex items-center gap-2 p-0 hover:bg-transparent'}> {/* Simplified logo link */}
+                <NavLink to='/' className={'btn btn-ghost normal-case text-xl flex items-center gap-2 p-0 bg-transparent shadow-none border-none'}> {/* Simplified logo link */}
                     <img src={logo} className='w-[40px] h-auto' alt="AppStore Logo" /> {/* Added h-auto for aspect ratio */}
                     <span>AppStore</span> {/* Use span for better semantics with text */}
                 </NavLink>
@@ -91,7 +102,7 @@ export const Navbar = () => {
                                         My Profile
                                     </NavLink>
                                 </li>
-                                <li><a>Settings</a></li> {/* Placeholder */}
+                                <li><button onClick={handlePfpSetting}>Settings</button></li> {/* Placeholder */}
                                 {/* <li className='mt-2'>
                                     <button onClick={handleLogOut} className="btn btn-sm btn-error text-white w-full">
                                         Logout (in dropdown)

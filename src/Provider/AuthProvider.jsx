@@ -1,7 +1,5 @@
-// AuthProvider.jsx
-
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import app from './../firebase/firebase.config'; // Assuming this is your firebase initialization file
+import app from './../firebase/firebase.config'; 
 import {
     createUserWithEmailAndPassword,
     getAuth,
@@ -10,11 +8,11 @@ import {
     updateProfile,
     GoogleAuthProvider,
     signInWithPopup,
-    sendPasswordResetEmail // <-- ****** ADD THIS IMPORT ******
+    sendPasswordResetEmail 
 } from "firebase/auth";
 
 export const AuthContext = createContext(null);
-const auth = getAuth(app); // Use 'app' which you imported from firebase.config.js
+const auth = getAuth(app); 
 const googleProvider = new GoogleAuthProvider();
 
 export const AuthProvider = ({ children }) => {
@@ -48,15 +46,13 @@ export const AuthProvider = ({ children }) => {
         return signInWithPopup(auth, googleProvider);
     };
 
-    // --- ****** ADD THIS FUNCTION ****** ---
     const resetPassword = (email) => {
-        setLoading(true); // Optional: You might want a loading state for this specific action
+        setLoading(true); 
         return sendPasswordResetEmail(auth, email)
             .finally(() => {
-                setLoading(false); // Ensure loading is set to false after the attempt
+                setLoading(false); 
             });
     };
-    // --- ****************************** ---
 
 
     useEffect(() => {
@@ -69,21 +65,20 @@ export const AuthProvider = ({ children }) => {
 
     const authData = {
         user,
-        setUser, // Still be cautious exposing this directly unless many components need it
+        setUser, 
         loading,
-        setLoading, // Same caution
+        setLoading, 
         createUser,
         logOut,
         signIn,
         updateUserProfile,
         googleSignIn,
-        resetPassword    // <-- ****** ADD resetPassword TO THE CONTEXT VALUE ******
+        resetPassword   
     };
 
     return <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>;
 };
 
-// Optional: Custom hook for easier context consumption
 export const useAuth = () => {
     return useContext(AuthContext);
 };

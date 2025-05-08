@@ -1,5 +1,5 @@
 // Apps.jsx
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { useLoaderData, Link } from 'react-router-dom';
 
 // --- Reusable AppCard Component ---
@@ -200,12 +200,15 @@ export const Apps = () => {
         { id: 1, src: "https://i.ibb.co/qYsxFwND/Generated-Image-May-07-2025-3-15-AM.jpg", alt: "Galaxy Raiders Game Banner" },
         { id: 2, src: "https://i.ibb.co/wZvPB6XK/Generated-Image-May-07-2025-3-16-AM-1.jpg", alt: "LinguaLearn App Banner" },
         { id: 3, src: "https://i.ibb.co/yF2tHfLN/Generated-Image-May-07-2025-3-23-AM-1.jpg", alt: "Math Whiz Kids App Banner" },
-        { id: 4, src: "https://i.ibb.co/TM2vX3X/Generated-Image-May-07-2025-3-20-AM.jpg", alt: "Puzzle Quest Elements Game Banner" },
+        { id: 4, src: "https://i.ibb.co.com/N2pwpWz5/Generated-Image-May-07-2025-3-13-AM.jpg", alt: "Puzzle Quest Elements Game Banner" },
         // It seems one of your image links might be a duplicate or typo:
         // The fourth image from your file (https://i.ibb.co.com/TM2v25X3/...) is https://i.ibb.co/TM2vX3X/...
         // I've used the one from your text input
     ];
 
+     useEffect(() => {
+            document.title = "AppStore - Apps";
+        }, []);
 
     return (
         <div className="bg-gray-50 min-h-screen"> {/* Added a light background to the whole page */}
@@ -247,7 +250,7 @@ export const Apps = () => {
             </div>
             
             <AppCategorySection
-                title="Productivity Powerhouses" // More engaging title
+                title="Productivity Powerhouses" 
                 apps={productivityApps}
                 categoryKey="Productivity"
                 showAll={showAllByCategory.Productivity}
@@ -255,7 +258,7 @@ export const Apps = () => {
             />
 
             <AppCategorySection
-                title="Top Tier Gaming" // More engaging title
+                title="Top Tier Gaming" 
                 apps={gamingApps}
                 categoryKey="Gaming"
                 showAll={showAllByCategory.Gaming}
@@ -263,15 +266,14 @@ export const Apps = () => {
             />
 
             <AppCategorySection
-                title="Educational Excellence" // More engaging title
+                title="Educational Excellence" 
                 apps={educationApps}
                 categoryKey="Education"
                 showAll={showAllByCategory.Education}
                 onViewMore={handleCategoryViewMore}
             />
 
-            {/* --- NEW: Most Downloaded Apps Section --- */}
-            <div className="container mx-auto px-4 py-16 bg-slate-100 rounded-xl shadow-inner"> {/* Added styling for differentiation */}
+            <div className="container mx-auto px-4 py-16 bg-slate-100 rounded-xl shadow-inner"> 
                 <h1 className="text-3xl font-bold text-center mb-12 text-gray-800">Community Favorites: Most Downloaded</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                     {mostDownloadedToDisplay.map(app => <AppCard key={`mostdownloaded-${app.id}`} app={app} />)}
@@ -288,7 +290,6 @@ export const Apps = () => {
                     </div>
                 )}
             </div>
-            {/* --- END OF NEW SECTION --- */}
         </div>
     );
 };
