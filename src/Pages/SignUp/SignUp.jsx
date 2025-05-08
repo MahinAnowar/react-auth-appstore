@@ -52,7 +52,7 @@ export const SignUp = () => {
         createUser(email, password)
             .then(result => {
                 // const user = result.user; // Not directly needed for display here
-                console.log('User created:', result.user);
+                // console.log('User created:', result.user);
                 // Update profile with name and photoURL (only if photoUrl is provided)
                 const profileData = { displayName: name };
                 if (photoUrl) {
@@ -61,7 +61,7 @@ export const SignUp = () => {
 
                 return updateUserProfile(profileData)
                     .then(() => {
-                        console.log('User profile updated successfully for email/password signup');
+                        // console.log('User profile updated successfully for email/password signup');
                         Swal.fire({
                             icon: 'success',
                             title: 'Account Created!',
@@ -74,7 +74,7 @@ export const SignUp = () => {
                     });
             })
             .catch(error => {
-                console.error('Error during registration or profile update:', error);
+                // console.error('Error during registration or profile update:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Registration Failed',
@@ -91,7 +91,7 @@ export const SignUp = () => {
         googleSignIn()
             .then(result => {
                 // const user = result.user; // Not directly needed for display
-                console.log('Google sign-up successful:', result.user);
+                // console.log('Google sign-up successful:', result.user);
                 Swal.fire({
                     icon: 'success',
                     title: 'Signed Up with Google!',
@@ -102,7 +102,7 @@ export const SignUp = () => {
                 navigate('/');
             })
             .catch(error => {
-                console.error('Google sign-up error:', error);
+                // console.error('Google sign-up error:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Google Sign-Up Failed',

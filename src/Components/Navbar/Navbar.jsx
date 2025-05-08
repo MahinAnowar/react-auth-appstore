@@ -33,7 +33,7 @@ export const Navbar = () => {
                 navigate('/login'); // Redirect to login page after successful logout
             })
             .catch((error) => {
-                console.error('Error logging out:', error);
+                // console.error('Error logging out:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Logout Failed',

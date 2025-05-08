@@ -26,7 +26,7 @@ const loadAppsData = async () => {
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error("Error loading apps.json:", error);
+        // console.error("Error loading apps.json:", error);
         if (error instanceof Response) {
             throw error; 
         }

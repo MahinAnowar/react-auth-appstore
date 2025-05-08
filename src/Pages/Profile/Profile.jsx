@@ -96,7 +96,7 @@ export const Profile = () => {
             });
             setIsEditing(false); // Exit edit mode on success
         } catch (error) {
-            console.error("Failed to update profile:", error);
+            // console.error("Failed to update profile:", error);
             Swal.fire({
                 icon: 'error',
                 title: 'Update Failed',

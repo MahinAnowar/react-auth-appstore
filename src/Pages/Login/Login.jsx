@@ -53,7 +53,7 @@ export const Login = () => {
                 navigate(location?.state?.from?.pathname || '/');
             })
             .catch(error => {
-                console.error('Email/Password login error:', error);
+                // console.error('Email/Password login error:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Login Failed',
@@ -80,7 +80,7 @@ export const Login = () => {
                 navigate(location?.state?.from?.pathname || '/');
             })
             .catch(error => {
-                console.error('Google login error:', error);
+                // console.error('Google login error:', error);
                
                 Swal.fire({
                     icon: 'error',
@@ -123,7 +123,7 @@ export const Login = () => {
                     });
                 })
                 .catch((error) => {
-                    console.error("Error sending password reset email:", error);
+                    // console.error("Error sending password reset email:", error);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',

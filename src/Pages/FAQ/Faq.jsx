@@ -53,7 +53,7 @@ export const Faq = () => {
             });
             return;
         }
-        console.log("User question submitted:", question); 
+        // console.log("User question submitted:", question); 
 
         Swal.fire({
             icon: 'success',
